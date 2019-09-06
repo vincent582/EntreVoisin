@@ -4,12 +4,13 @@ import android.util.Log;
 
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Dummy mock for the Api
  */
-public class DummyNeighbourApiService implements  NeighbourApiService {
+public class DummyNeighbourApiService implements NeighbourApiService {
 
     private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
 
@@ -31,13 +32,12 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     @Override
     public void setNeighboursFavorite(Neighbour neighbour) {
-        if (neighbour.getFavorite() == false)
-        {
-            neighbour.setFavorite(true);
+        Neighbour n = neighbours.get(neighbours.indexOf(neighbour));
+        if (n.getFavorite() == false){
+            n.setFavorite(true);
+        }else{
+            n.setFavorite(false);
         }
-        else{
-            neighbour.setFavorite(false);
-        }
-    }
 
+    }
 }
