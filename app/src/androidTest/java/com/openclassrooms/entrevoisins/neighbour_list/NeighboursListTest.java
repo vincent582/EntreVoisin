@@ -16,10 +16,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.swipeLeft;
+import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 
@@ -67,5 +75,49 @@ public class NeighboursListTest {
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
         // Then : the number of element is 11
         onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT-1));
+    }
+
+    /**
+     * Open Activity detail, when click on list element.
+     */
+    @Test
+    public void myNeighboursList_onClickItem_shouldOpenDetailActivity() {
+        //Given : Start Detail Activity
+        //when perform a click on item position
+        onView(withId(R.id.list_neighbours))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        //Then : we check if text Name in DetailActivity is displayed.
+        onView(withId(R.id.neigbourhNameTitle)).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check if the name in DetailActivity is the same as the item selected.
+     */
+    @Test
+    public void detailNeighbourName_onDetailActivity_isCorrect() {
+        //Given : Proper name in Textview
+        //when : open detailActivity
+        onView(withId(R.id.list_neighbours))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        //Then : we check if text Name in DetailActivity is displayed.
+        onView(withId(R.id.neigbourName)).check(matches(withText("Caroline")));
+    }
+
+    /**
+     * Check if favorite list contain only items marked as favorite.
+     */
+    @Test
+    public void favoritesList_onFavoriteTab_showFavoriteItems() {
+        //Given : Favorites list in favorite tab
+        onView(withId(R.id.list_neighbours))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
+        //when : add item in favorite onClick on floating action button
+        onView(withId(R.id.fab_favorite))
+                .perform(click());
+        pressBack();
+        onView(withId(R.id.container)).perform(swipeLeft());
+        //Then : we display the favorites list.
+        onView(withId(R.id.list_neighboursFavorite)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.neigbourName)).check(matches(withText("Jack")));
     }
 }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.R;
@@ -77,7 +78,6 @@ public class DetailFragment extends Fragment {
         fab_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                mApiService.setNeighboursFavorite(neighbour);
                 setFabFavorite();
             }
         });
@@ -86,13 +86,12 @@ public class DetailFragment extends Fragment {
     }
 
     public void setFabFavorite(){
-        List<Neighbour> allNeighbour = mApiService.getNeighbours();
-        Neighbour n = allNeighbour.get(allNeighbour.indexOf(neighbour));
-
-        if (n.getFavorite() == true){
+        if (mApiService.isFavoriteNeighbour(neighbour)){
             fab_favorite.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_white_24dp));
+            Toast.makeText(this.getContext(),"Le voisin est déjà dans vos favoris", Toast.LENGTH_LONG);
         }
         else{
+            mApiService.addNeighbourFavorite(neighbour);
             fab_favorite.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_white_24dp));
         }
     }

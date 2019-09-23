@@ -1,5 +1,7 @@
 package com.openclassrooms.entrevoisins.di;
 
+import android.util.Log;
+
 import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
@@ -25,4 +27,5 @@ public class DI {
     public static NeighbourApiService getNewInstanceApiService() {
         return new DummyNeighbourApiService();
     }
+
 }

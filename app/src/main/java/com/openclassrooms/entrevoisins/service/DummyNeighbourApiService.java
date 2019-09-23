@@ -13,6 +13,7 @@ import java.util.List;
 public class DummyNeighbourApiService implements NeighbourApiService {
 
     private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
+    private List<Neighbour> favoriteNeighbours = new ArrayList<>();
 
     /**
      * {@inheritDoc}
@@ -31,13 +32,23 @@ public class DummyNeighbourApiService implements NeighbourApiService {
     }
 
     @Override
-    public void setNeighboursFavorite(Neighbour neighbour) {
-        Neighbour n = neighbours.get(neighbours.indexOf(neighbour));
-        if (n.getFavorite() == false){
-            n.setFavorite(true);
-        }else{
-            n.setFavorite(false);
-        }
-
+    public void addNeighbourFavorite(Neighbour neighbour) {
+        favoriteNeighbours.add(neighbour);
     }
+
+    @Override
+    public void deleteNeighbourFavorite(Neighbour neighbour) {
+        favoriteNeighbours.remove(neighbour);
+    }
+
+    @Override
+    public boolean isFavoriteNeighbour(Neighbour neighbour) {
+        return favoriteNeighbours.contains(neighbour);
+    }
+
+    @Override
+    public List<Neighbour> getFavoriteNeighbours() {
+        return favoriteNeighbours;
+    }
+
 }
