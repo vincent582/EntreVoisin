@@ -42,6 +42,7 @@ public class DetailFragment extends Fragment {
 
     private NeighbourApiService mApiService;
     protected Neighbour neighbour;
+    public static String NEIGHBOUR = "NEIGHBOUR";
 
     public DetailFragment() {
         // Required empty public constructor
@@ -51,9 +52,9 @@ public class DetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getActivity().getIntent().hasExtra("neighbour"))
+        if (getActivity().getIntent().hasExtra(NEIGHBOUR))
         {
-            neighbour = (Neighbour) getActivity().getIntent().getSerializableExtra("neighbour");
+            neighbour = (Neighbour) getActivity().getIntent().getSerializableExtra(NEIGHBOUR);
         }
         mApiService = DI.getNeighbourApiService();
     }
@@ -73,7 +74,7 @@ public class DetailFragment extends Fragment {
                 .centerCrop()
                 .into(neighbourPicture);
 
-        setFabFavorite();
+        setFavoriteImage();
 
         fab_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,14 +86,24 @@ public class DetailFragment extends Fragment {
         return view;
     }
 
-    public void setFabFavorite(){
+    private void setFavoriteImage() {
         if (mApiService.isFavoriteNeighbour(neighbour)){
             fab_favorite.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_white_24dp));
-            Toast.makeText(this.getContext(),"Le voisin est déjà dans vos favoris", Toast.LENGTH_LONG);
+        }
+        else{
+            fab_favorite.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_white_24dp));
+        }
+    }
+
+    public void setFabFavorite(){
+        if (mApiService.isFavoriteNeighbour(neighbour)){
+            setFavoriteImage();
+            Toast.makeText(this.getContext(),"Le voisin est déjà dans vos favoris", Toast.LENGTH_LONG).show();
         }
         else{
             mApiService.addNeighbourFavorite(neighbour);
-            fab_favorite.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_white_24dp));
+            Toast.makeText(this.getContext(),"Le voisin à été ajouté dans vos favoris", Toast.LENGTH_LONG).show();
+            setFavoriteImage();
         }
     }
 

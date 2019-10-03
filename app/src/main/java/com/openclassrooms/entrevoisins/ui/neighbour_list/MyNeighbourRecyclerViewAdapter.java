@@ -16,6 +16,7 @@ import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourFavoriteEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.ui.neighbour_detail.DetailFragment;
 import com.openclassrooms.entrevoisins.ui.neighbour_detail.DetailNeighbourActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -32,6 +33,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     private final List<Neighbour> mNeighbours;
     private boolean isFavoriteList;
+
 
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, boolean isFavoriteList) {
         this.isFavoriteList = isFavoriteList;
@@ -70,7 +72,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), DetailNeighbourActivity.class);
-                intent.putExtra("neighbour", (Serializable) neighbour);
+                intent.putExtra(DetailFragment.NEIGHBOUR, (Serializable) neighbour);
                 v.getContext().startActivity(intent);
             }
         });
