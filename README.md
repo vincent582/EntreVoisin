@@ -18,5 +18,3 @@
 ![Screenshot](screenshot4.png)
 
 **7 -** Enjoy!!
-![Screenshot](screenshot5.png)
-
