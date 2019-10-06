@@ -1,6 +1,6 @@
 # EntreVoisins
 
-**1 -** Télécharger où cloner le projet depuis l'adresse Github **https://github.com/vincent582/EntreVoisins/.** En cliquant sur ce boutton :
+## **1 -** Télécharger où cloner le projet depuis l'adresse Github **https://github.com/vincent582/EntreVoisins/.** En cliquant sur ce boutton :
 
 ![Screenshot](screenshot.png)
 
