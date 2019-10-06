@@ -54,7 +54,7 @@ public class NeighboursListTest {
 
     // This is fixed
     private static int ITEMS_COUNT = 12;
-    private int POSITION_ITEM = 2;
+    private int POSITION_ITEM = 1;
 
     private ListNeighbourActivity mActivity;
     private NeighbourApiService mService;
@@ -67,7 +67,7 @@ public class NeighboursListTest {
     public void setUp() {
         mActivity = mActivityRule.getActivity();
         assertThat(mActivity, notNullValue());
-        mService = DI.getNeighbourApiService();
+        mService = DI.getNewInstanceApiService();
     }
 
     /**
