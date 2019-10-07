@@ -72,7 +72,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), DetailNeighbourActivity.class);
-                intent.putExtra(DetailFragment.NEIGHBOUR, (Serializable) neighbour);
+                intent.putExtra(DetailNeighbourActivity.NEIGHBOUR, (Serializable) neighbour);
                 v.getContext().startActivity(intent);
             }
         });

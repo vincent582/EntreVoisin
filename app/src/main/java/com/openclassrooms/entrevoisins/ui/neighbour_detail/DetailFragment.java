@@ -38,11 +38,13 @@ public class DetailFragment extends Fragment {
     TextView social;
     @BindView(R.id.fab_favorite)
     FloatingActionButton fab_favorite;
+    @BindView(R.id.iv_back)
+    ImageView back;
 
 
     private NeighbourApiService mApiService;
-    protected Neighbour neighbour;
-    public static String NEIGHBOUR = "NEIGHBOUR";
+    protected Neighbour mNeighbour;
+
 
     public DetailFragment() {
         // Required empty public constructor
@@ -52,10 +54,10 @@ public class DetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getActivity().getIntent().hasExtra(NEIGHBOUR))
-        {
-            neighbour = (Neighbour) getActivity().getIntent().getSerializableExtra(NEIGHBOUR);
-        }
+
+        Bundle args = getArguments();
+        mNeighbour = (Neighbour) args.getSerializable(DetailNeighbourActivity.NEIGHBOUR);
+
         mApiService = DI.getNeighbourApiService();
     }
 
@@ -65,12 +67,12 @@ public class DetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this,view);
 
-        neighbourNameTitle.setText(neighbour.getName());
-        neighbourName.setText(neighbour.getName());
-        social.setText("www.facebook.fr/"+neighbour.getName());
+        neighbourNameTitle.setText(mNeighbour.getName());
+        neighbourName.setText(mNeighbour.getName());
+        social.setText("www.facebook.fr/"+mNeighbour.getName());
 
         Glide.with(this)
-                .load(neighbour.getAvatarUrl())
+                .load(mNeighbour.getAvatarUrl())
                 .centerCrop()
                 .into(neighbourPicture);
 
@@ -83,11 +85,19 @@ public class DetailFragment extends Fragment {
             }
         });
 
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
         return view;
     }
 
     private void setFavoriteImage() {
-        if (mApiService.isFavoriteNeighbour(neighbour)){
+        if (mApiService.isFavoriteNeighbour(mNeighbour)){
             fab_favorite.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_white_24dp));
         }
         else{
@@ -96,12 +106,12 @@ public class DetailFragment extends Fragment {
     }
 
     public void setFabFavorite(){
-        if (mApiService.isFavoriteNeighbour(neighbour)){
+        if (mApiService.isFavoriteNeighbour(mNeighbour)){
             setFavoriteImage();
             Toast.makeText(this.getContext(),"Le voisin est déjà dans vos favoris", Toast.LENGTH_LONG).show();
         }
         else{
-            mApiService.addNeighbourFavorite(neighbour);
+            mApiService.addNeighbourFavorite(mNeighbour);
             Toast.makeText(this.getContext(),"Le voisin à été ajouté dans vos favoris", Toast.LENGTH_LONG).show();
             setFavoriteImage();
         }
