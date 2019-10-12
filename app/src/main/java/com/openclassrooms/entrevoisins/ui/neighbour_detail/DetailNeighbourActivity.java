@@ -26,17 +26,15 @@ public class DetailNeighbourActivity extends AppCompatActivity {
             mNeighbour = getIntent().getSerializableExtra(NEIGHBOUR);
         }
 
-        mDetailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.detail_activity_framelayout);
-        if (mDetailFragment == null){
-            Bundle args = new Bundle();
-            args.putSerializable(NEIGHBOUR,mNeighbour);
+        Bundle args = new Bundle();
+        args.putSerializable(NEIGHBOUR,mNeighbour);
 
-            mDetailFragment = new DetailFragment();
-            mDetailFragment.setArguments(args);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.detail_activity_framelayout,mDetailFragment)
-                    .commit();
-        }
+        mDetailFragment = new DetailFragment();
+        mDetailFragment.setArguments(args);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.detail_activity_framelayout,mDetailFragment)
+                .commit();
+
     }
 }

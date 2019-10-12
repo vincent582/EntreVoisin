@@ -56,8 +56,9 @@ public class DetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        mNeighbour = (Neighbour) args.getSerializable(DetailNeighbourActivity.NEIGHBOUR);
-
+        if (args.getSerializable(DetailNeighbourActivity.NEIGHBOUR) != null){
+            mNeighbour = (Neighbour) args.getSerializable(DetailNeighbourActivity.NEIGHBOUR);
+        }
         mApiService = DI.getNeighbourApiService();
     }
 
