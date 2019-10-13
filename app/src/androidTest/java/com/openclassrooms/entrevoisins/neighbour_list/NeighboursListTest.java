@@ -54,7 +54,7 @@ public class NeighboursListTest {
 
     // This is fixed
     private static int ITEMS_COUNT = 12;
-    private int POSITION_ITEM = 1;
+    private int POSITION_ITEM = 0;
 
     private ListNeighbourActivity mActivity;
     private NeighbourApiService mService;
@@ -85,7 +85,7 @@ public class NeighboursListTest {
      */
     @Test
     public void myNeighboursList_deleteAction_shouldRemoveItem() {
-        // Given : We remove the element at position 2
+        // Given : We remove the element at position selected
         onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
         onView(ViewMatchers.withId(R.id.list_neighbours))
@@ -103,7 +103,7 @@ public class NeighboursListTest {
         //when perform a click on item position
         onView(withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(POSITION_ITEM, click()));
-        //Then : we check if text Name in DetailActivity is displayed.
+        //Then : we check if textView neigbourhNameTitle in DetailActivity is displayed.
         onView(withId(R.id.neigbourhNameTitle)).check(matches(isDisplayed()));
     }
 
@@ -115,34 +115,38 @@ public class NeighboursListTest {
         List<Neighbour> neighbourList = mService.getNeighbours();
         Neighbour neighbour = neighbourList.get(POSITION_ITEM);
 
-        //Given : Proper name in Textview
+        //Given : Proper name Textview in detailActivity
         //when : open detailActivity
         onView(withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(POSITION_ITEM, click()));
-        //Then : we check if text Name in DetailActivity is displayed.
+        //Then : we check if text Name displayed in DetailActivity match with neigbour name.
         onView(withId(R.id.neigbourName)).check(matches(withText(neighbour.getName())));
     }
 
     /**
-     * Check if favorite list contain only items marked as favorite.
+     * Check if favorite list contain items marked as favorite.
      */
     @Test
     public void favoritesList_onFavoriteTab_showFavoriteItems() {
-        //Given : Favorites list in favorite tab
+        //Given : Favorites list in favorite Tab.
+
+        //when : add 2 items in favorite onClick on floating action button.
         onView(withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(POSITION_ITEM, click()));
-        //when : add 2 items in favorite onClick on floating action button
         onView(withId(R.id.fab_favorite))
                 .perform(click());
         pressBack();
+
         onView(withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(POSITION_ITEM+1, click()));
         onView(withId(R.id.fab_favorite))
                 .perform(click());
         pressBack();
 
-        //Then : Check if the number of items in Favorite list is same as the number neigbours we added.
+        //swipe to favorite Tab.
         onView(withId(R.id.container)).perform(swipeLeft());
+
+        //Then : Check if the number of items in Favorite list is same as the number neigbours we added.
         onView(ViewMatchers.withId(R.id.list_neighboursFavorite)).check(withItemCount(2));
     }
 
@@ -151,6 +155,7 @@ public class NeighboursListTest {
      */
     @Test
     public void myNeighboursListFavorite_deleteAction_shouldRemoveItemFromFavorite() {
+        // Given : We remove the item in favorite List.
 
         //add item in favorite.
         onView(withId(R.id.list_neighbours))
@@ -160,8 +165,9 @@ public class NeighboursListTest {
         pressBack();
         onView(withId(R.id.container)).perform(swipeLeft());
 
-        // Given : We remove the element at position
+        //check if list is not empty.
         onView(ViewMatchers.withId(R.id.list_neighboursFavorite)).check(withItemCount(1));
+
         // When perform a click on a delete icon
         onView(ViewMatchers.withId(R.id.list_neighboursFavorite))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, new DeleteViewAction()));
