@@ -89,7 +89,7 @@ public class NeighboursListTest {
         onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
         onView(ViewMatchers.withId(R.id.list_neighbours))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(POSITION_ITEM, new DeleteViewAction()));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(2, new DeleteViewAction()));
         // Then : the number of element is 11
         onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT-1));
     }
@@ -170,7 +170,7 @@ public class NeighboursListTest {
 
         // When perform a click on a delete icon
         onView(ViewMatchers.withId(R.id.list_neighboursFavorite))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, new DeleteViewAction()));
+                .perform(RecyclerViewActions.actionOnItemAtPosition( 0, new DeleteViewAction()));
         // Then : the number of element is 11
         onView(ViewMatchers.withId(R.id.list_neighboursFavorite)).check(withItemCount(0));
     }
