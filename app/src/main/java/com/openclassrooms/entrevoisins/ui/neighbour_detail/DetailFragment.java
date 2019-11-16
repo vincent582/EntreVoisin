@@ -41,15 +41,12 @@ public class DetailFragment extends Fragment {
     @BindView(R.id.iv_back)
     ImageView back;
 
-
     private NeighbourApiService mApiService;
     protected Neighbour mNeighbour;
-
 
     public DetailFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,7 +95,7 @@ public class DetailFragment extends Fragment {
     }
 
     private void setFavoriteImage() {
-        if (mApiService.isFavoriteNeighbour(mNeighbour)){
+        if (mApiService.isFavorite(mNeighbour)){
             fab_favorite.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_white_24dp));
         }
         else{
@@ -107,13 +104,13 @@ public class DetailFragment extends Fragment {
     }
 
     public void setFabFavorite(){
-        if (mApiService.isFavoriteNeighbour(mNeighbour)){
+        if (mApiService.isFavorite(mNeighbour)){
             setFavoriteImage();
-            Toast.makeText(this.getContext(),"Le voisin est déjà dans vos favoris", Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getContext(),"Le voisin est déjà dans vos favoris", Toast.LENGTH_SHORT).show();
         }
         else{
             mApiService.addNeighbourFavorite(mNeighbour);
-            Toast.makeText(this.getContext(),"Le voisin à été ajouté dans vos favoris", Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getContext(),"Le voisin à été ajouté dans vos favoris", Toast.LENGTH_SHORT).show();
             setFavoriteImage();
         }
     }

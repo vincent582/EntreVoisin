@@ -44,8 +44,6 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 
-
-
 /**
  * Test class for list of neighbours
  */
@@ -53,11 +51,12 @@ import static org.hamcrest.core.IsNull.notNullValue;
 public class NeighboursListTest {
 
     // This is fixed
-    private static int ITEMS_COUNT = 12;
+    private static int ITEMS_COUNT;
     private int POSITION_ITEM = 0;
 
     private ListNeighbourActivity mActivity;
     private NeighbourApiService mService;
+    private List<Neighbour> neighbourList;
 
     @Rule
     public ActivityTestRule<ListNeighbourActivity> mActivityRule =
@@ -68,6 +67,8 @@ public class NeighboursListTest {
         mActivity = mActivityRule.getActivity();
         assertThat(mActivity, notNullValue());
         mService = DI.getNewInstanceApiService();
+        neighbourList = mService.getNeighbours();
+        ITEMS_COUNT = neighbourList.size();
     }
 
     /**
@@ -112,7 +113,6 @@ public class NeighboursListTest {
      */
     @Test
     public void detailNeighbourName_onDetailActivity_isCorrect() {
-        List<Neighbour> neighbourList = mService.getNeighbours();
         Neighbour neighbour = neighbourList.get(POSITION_ITEM);
 
         //Given : Proper name Textview in detailActivity

@@ -24,9 +24,7 @@ public interface NeighbourApiService {
 
     void addNeighbourFavorite(Neighbour neighbour);
 
-    void deleteNeighbourFavorite(Neighbour neighbour);
+    Boolean isFavorite(Neighbour neighbour);
 
-    boolean isFavoriteNeighbour(Neighbour neighbour);
-
-    List<Neighbour> getFavoriteNeighbours();
+    List<Neighbour> getFavoriteNeighbour();
 }

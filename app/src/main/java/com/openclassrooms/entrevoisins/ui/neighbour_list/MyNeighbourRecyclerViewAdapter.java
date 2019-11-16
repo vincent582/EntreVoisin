@@ -14,9 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
-import com.openclassrooms.entrevoisins.events.DeleteNeighbourFavoriteEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.ui.neighbour_detail.DetailFragment;
 import com.openclassrooms.entrevoisins.ui.neighbour_detail.DetailNeighbourActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,16 +25,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.support.v4.content.ContextCompat.startActivity;
 
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighbours;
-    private boolean isFavoriteList;
 
-
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, boolean isFavoriteList) {
-        this.isFavoriteList = isFavoriteList;
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
         this.mNeighbours = items;
     }
 
@@ -59,12 +53,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isFavoriteList == true){
-                    EventBus.getDefault().post(new DeleteNeighbourFavoriteEvent(neighbour));
-                }
-                else{
-                    EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
-                }
+                EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
             }
         });
 
