@@ -33,6 +33,7 @@ public class DummyNeighbourApiService implements NeighbourApiService {
         neighbours.get(neighbours.indexOf(neighbour)).setFavorite(true);
     }
 
+
     @Override
     public Boolean isFavorite(Neighbour neighbour) {
         return neighbours.get(neighbours.indexOf(neighbour)).getFavorite();
@@ -47,5 +48,10 @@ public class DummyNeighbourApiService implements NeighbourApiService {
             }
         }
         return favoriteNeighbourList;
+    }
+
+    @Override
+    public void removeFavoriteNeighbour(Neighbour neighbour) {
+        neighbours.get(neighbours.indexOf(neighbour)).setFavorite(false);
     }
 }

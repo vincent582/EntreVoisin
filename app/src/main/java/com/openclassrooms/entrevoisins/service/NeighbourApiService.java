@@ -27,4 +27,6 @@ public interface NeighbourApiService {
     Boolean isFavorite(Neighbour neighbour);
 
     List<Neighbour> getFavoriteNeighbour();
+
+    void removeFavoriteNeighbour(Neighbour neighbour);
 }

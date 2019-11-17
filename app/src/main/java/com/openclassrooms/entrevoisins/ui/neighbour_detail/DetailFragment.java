@@ -105,8 +105,9 @@ public class DetailFragment extends Fragment {
 
     public void setFabFavorite(){
         if (mApiService.isFavorite(mNeighbour)){
+            mApiService.removeFavoriteNeighbour(mNeighbour);
+            Toast.makeText(this.getContext(),"Le voisin n'est plus dans vos favoris", Toast.LENGTH_SHORT).show();
             setFavoriteImage();
-            Toast.makeText(this.getContext(),"Le voisin est déjà dans vos favoris", Toast.LENGTH_SHORT).show();
         }
         else{
             mApiService.addNeighbourFavorite(mNeighbour);
